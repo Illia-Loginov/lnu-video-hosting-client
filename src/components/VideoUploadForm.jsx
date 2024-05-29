@@ -4,6 +4,7 @@ import { uploadFile } from '../services/api.service';
 export default ({ appendFile }) => {
   const [title, setTitle] = useState('');
   const [file, setFile] = useState(null);
+  const [error, setError] = useState(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -12,11 +13,16 @@ export default ({ appendFile }) => {
     formData.append('title', title);
     formData.append('file', file);
 
-    const result = await uploadFile(formData);
+    try {
+      const result = await uploadFile(formData);
 
-    appendFile(result);
-    setTitle('');
-    setFile(null);
+      appendFile(result);
+      setTitle('');
+      setFile(null);
+      setError(null);
+    } catch (error) {
+      setError(error.response?.data?.message || error.message);
+    }
   };
 
   return (
@@ -44,6 +50,7 @@ export default ({ appendFile }) => {
 
         <button type="submit">Upload</button>
       </form>
+      {error && <p>{error}</p>}
     </section>
   );
 };
