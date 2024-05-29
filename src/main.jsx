@@ -2,9 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './styles.css';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import Root from './pages/Root';
 import Error from './pages/Error';
-import Player from './pages/Player';
+import Root from './pages/Root';
+import Player, { playerLoader } from './pages/Player';
 
 const router = createBrowserRouter([
   {
@@ -14,7 +14,9 @@ const router = createBrowserRouter([
   },
   {
     path: '/videos/:id',
-    element: <Player />
+    element: <Player />,
+    loader: playerLoader,
+    errorElement: <Error />
   }
 ]);
 

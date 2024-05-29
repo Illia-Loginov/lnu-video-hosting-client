@@ -1,23 +1,19 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { deleteFileById, getFileById } from '../services/api.service';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useLoaderData, useNavigate } from 'react-router-dom';
 import ReactPlayer from 'react-player';
 
+export const playerLoader = async ({ params }) => {
+  const { id } = params;
+
+  return {
+    id,
+    file: await getFileById(id)
+  };
+};
+
 export default () => {
-  const { id } = useParams();
-
-  const [file, setFile] = useState(undefined);
-
-  useEffect(() => {
-    const fetchFile = async () => {
-      const result = await getFileById(id);
-
-      setFile(result);
-    };
-
-    fetchFile();
-  }, []);
-
+  const { id, file } = useLoaderData();
   const navigate = useNavigate();
 
   const handleDelete = async (e) => {
@@ -30,16 +26,12 @@ export default () => {
 
   return (
     <main>
-      {file ? (
-        <section>
-          <h1>{file.title}</h1>
-          <ReactPlayer url={file.url} controls />
-          <p>{file.created_at}</p>
-          <button onClick={handleDelete}>Delete</button>
-        </section>
-      ) : (
-        <p>Loading...</p>
-      )}
+      <section>
+        <h1>{file.title}</h1>
+        <ReactPlayer url={file.url} controls />
+        <p>{file.created_at}</p>
+        <button onClick={handleDelete}>Delete</button>
+      </section>
     </main>
   );
 };
