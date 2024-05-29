@@ -12,3 +12,9 @@ export const getFileById = async (id) => {
 
   return response?.data || {};
 };
+
+export const uploadFile = async (formData) => {
+  const response = await axios.post(`${apiUrl}/files`, formData);
+
+  return response?.data || {};
+};

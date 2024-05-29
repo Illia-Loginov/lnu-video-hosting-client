@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { getAllFiles } from '../services/api.service';
 import VideoListItem from '../components/VideoListItem';
+import VideoUploadForm from '../components/VideoUploadForm';
 
 export default () => {
   const [files, setFiles] = useState(undefined);
@@ -18,11 +19,13 @@ export default () => {
     fetchFiles();
   }, []);
 
+  const appendFile = (file) => {
+    setFiles((prevFiles) => [file, ...prevFiles]);
+  };
+
   return (
     <main>
-      <section>
-        <h2>Upload a video</h2>
-      </section>
+      <VideoUploadForm appendFile={appendFile} />
       <section>
         <h2>Videos</h2>
         {files ? (
