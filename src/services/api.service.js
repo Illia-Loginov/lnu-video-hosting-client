@@ -18,3 +18,7 @@ export const uploadFile = async (formData) => {
 
   return response?.data || {};
 };
+
+export const deleteFileById = async (id) => {
+  await axios.delete(`${apiUrl}/files/${id}`);
+};
