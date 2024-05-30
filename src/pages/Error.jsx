@@ -6,11 +6,15 @@ export default () => {
   const errorStatus = error.response?.status || error.status;
 
   return (
-    <main>
-      <h1>{errorStatus && errorStatus + ' '}Error</h1>
-      <p>
-        {error.response?.data?.message || error.statusText || error.message}
-      </p>
+    <main className="main">
+      <section className="section">
+        <h1 className="heading error">
+          {errorStatus && errorStatus + ' '}Error
+        </h1>
+        <p className="error">
+          {error.response?.data?.message || error.statusText || error.message}
+        </p>
+      </section>
     </main>
   );
 };

@@ -24,12 +24,12 @@ export default () => {
   };
 
   return (
-    <main>
+    <main className="main">
       <VideoUploadForm appendFile={appendFile} />
-      <section>
-        <h2>Videos</h2>
+      <section className="section videos-section">
+        <h2 className="heading">Videos</h2>
         {files ? (
-          <ul>
+          <ul className="video-list">
             {files.map((file) => (
               <VideoListItem file={file} key={file.id} />
             ))}

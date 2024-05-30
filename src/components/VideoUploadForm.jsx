@@ -26,21 +26,22 @@ export default ({ appendFile }) => {
   };
 
   return (
-    <section>
-      <h2>Upload a video</h2>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="title">Title</label>
+    <section className="section">
+      <h2 className="heading">Upload a video</h2>
+      <form onSubmit={handleSubmit} className="form">
         <input
+          className="input"
           type="text"
           id="title"
           name="title"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           required
+          placeholder="Title"
         />
 
-        <label htmlFor="file">File</label>
         <input
+          className="input-file"
           type="file"
           id="file"
           name="file"
@@ -48,9 +49,11 @@ export default ({ appendFile }) => {
           required
         />
 
-        <button type="submit">Upload</button>
+        <button className="input button" type="submit">
+          Upload
+        </button>
       </form>
-      {error && <p>{error}</p>}
+      {error && <p className="form__error">{error}</p>}
     </section>
   );
 };

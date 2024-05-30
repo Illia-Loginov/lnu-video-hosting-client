@@ -1,7 +1,10 @@
-import { useState } from 'react';
 import { deleteFileById, getFileById } from '../services/api.service';
 import { useLoaderData, useNavigate } from 'react-router-dom';
 import ReactPlayer from 'react-player';
+import {
+  getLongDateTime,
+  getShortDateTime
+} from '../services/datetime.service';
 
 export const playerLoader = async ({ params }) => {
   const { id } = params;
@@ -16,6 +19,8 @@ export default () => {
   const { id, file } = useLoaderData();
   const navigate = useNavigate();
 
+  const createdAt = new Date(file.created_at);
+
   const handleDelete = async (e) => {
     e.preventDefault();
 
@@ -25,12 +30,30 @@ export default () => {
   };
 
   return (
-    <main>
-      <section>
-        <h1>{file.title}</h1>
-        <ReactPlayer url={file.url} controls />
-        <p>{file.created_at}</p>
-        <button onClick={handleDelete}>Delete</button>
+    <main className="main">
+      <section className="section">
+        <h1 className="heading">{file.title}</h1>
+        <ReactPlayer
+          className="player"
+          url={file.url}
+          controls
+          width="100%"
+          height="auto"
+        />
+        <div className="video-item__metadata">
+          <p
+            className="video-item__metadata-item"
+            title={getLongDateTime(createdAt)}
+          >
+            {getShortDateTime(createdAt)}
+          </p>
+          <button
+            className="input button button-warning"
+            onClick={handleDelete}
+          >
+            Delete
+          </button>
+        </div>
       </section>
     </main>
   );
